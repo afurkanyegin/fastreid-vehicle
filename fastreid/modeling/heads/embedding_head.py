@@ -61,8 +61,10 @@ class EmbeddingHead(nn.Module):
             norm_type:
         """
         super().__init__()
-
         # Pooling layer
+        if pool_type == 'gempool':
+            pool_type = "GeneralizedMeanPooling"
+
         assert hasattr(pooling, pool_type), "Expected pool types are {}, " \
                                             "but got {}".format(pooling.__all__, pool_type)
         self.pool_layer = getattr(pooling, pool_type)()

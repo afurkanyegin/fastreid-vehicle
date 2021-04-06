@@ -165,7 +165,10 @@ def fast_batch_collator(batched_inputs):
     if isinstance(elem, torch.Tensor):
         out = torch.zeros((len(batched_inputs), *elem.size()), dtype=elem.dtype)
         for i, tensor in enumerate(batched_inputs):
-            out[i] += tensor
+            try:
+                out[i] += tensor
+            except Exception as e:
+                print(e)
         return out
 
     elif isinstance(elem, container_abcs.Mapping):
